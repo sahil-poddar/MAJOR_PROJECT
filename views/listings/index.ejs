@@ -1,0 +1,255 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- ================= FILTER BAR ================= -->
+
+<div id="filter-wrapper">
+
+  <!-- FILTERS -->
+  <div id="filters">
+
+    <div class="filter active">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>City</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain-sun"></i></div>
+      <p>Mountains</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beach</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Lake</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-tree"></i></div>
+      <p>Forest</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-house"></i></div>
+      <p>House</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-hotel"></i></div>
+      <p>Hotels</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-person-skiing"></i></div>
+      <p>Skiing</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Pool</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-building"></i></div>
+      <p>Luxury</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-water-ladder"></i></div>
+      <p>Lakefront</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-house-chimney-window"></i></div>
+      <p>Villas</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-warehouse"></i></div>
+      <p>Farmhouse</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-tent"></i></div>
+      <p>Glamping</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-sailboat"></i></div>
+      <p>Boats</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-sun"></i></div>
+      <p>Sunset</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Snow</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-heart"></i></div>
+      <p>Romantic</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-people-group"></i></div>
+      <p>Family</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-paw"></i></div>
+      <p>Pet Friendly</p>
+    </div>
+
+  </div>
+
+
+  <!-- ================= PRICE SWITCH ================= -->
+
+  <div id="price-toggle">
+
+    <span>Display total price</span>
+
+    <label class="switch">
+      <input type="checkbox" id="priceSwitch">
+      <span class="slider"></span>
+    </label>
+
+  </div>
+
+</div>
+
+
+<!-- ================= LISTINGS ================= -->
+
+<div class="container">
+
+  <h3 class="mt-4 mb-4">All Wanderlust Listings</h3>
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+
+    <% for (let listing of allListings) { %>
+
+      <div class="col">
+
+        <a
+          href="/listings/<%= listing._id %>"
+          class="listing-link"
+        >
+
+          <div class="listing-card">
+
+            <!-- LISTING IMAGE -->
+            <img
+              src="<%= listing.image.url %>"
+              class="card-img-top"
+              alt="<%= listing.title %>"
+            >
+
+            <!-- LISTING DETAILS -->
+            <div class="card-body">
+
+              <p class="card-text">
+
+                <b>
+                  <%= listing.title %>
+                </b>
+
+                <br>
+
+                <span
+                  class="price"
+                  data-price="<%= listing.price || 0 %>"
+                >
+                  ₹
+                  <%= listing.price
+                    ? listing.price.toLocaleString("en-IN")
+                    : "N/A"
+                  %>/night
+                </span>
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    <% } %>
+
+  </div>
+
+</div>
+
+
+<!-- ================= PRICE SWITCH JAVASCRIPT ================= -->
+
+<script>
+
+  const priceSwitch = document.getElementById("priceSwitch");
+
+  const prices = document.querySelectorAll(".price");
+
+  priceSwitch.addEventListener("change", function () {
+
+    prices.forEach(priceElement => {
+
+      const price = Number(priceElement.dataset.price);
+
+      /* PRICE NOT AVAILABLE */
+      if (!price) {
+        priceElement.innerText = "Price unavailable";
+        return;
+      }
+
+      /* SWITCH ON */
+      if (this.checked) {
+
+        // 18% GST
+        const gst = price * 0.18;
+
+        // Original price + GST
+        const totalPrice = price + gst;
+
+        priceElement.innerText =
+          "₹ " +
+          Math.round(totalPrice).toLocaleString("en-IN") +
+          "/night";
+
+      }
+
+      /* SWITCH OFF */
+      else {
+
+        // Only original listing price
+        priceElement.innerText =
+          "₹ " +
+          price.toLocaleString("en-IN") +
+          "/night";
+
+      }
+
+    });
+
+  });
+
+</script>

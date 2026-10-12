@@ -1,0 +1,152 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+
+  <div class="container-fluid">
+
+    <!-- LOGO -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+
+    <!-- MOBILE MENU -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAVBAR CONTENT -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+      <!-- LEFT -->
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">
+          Explore
+        </a>
+      </div>
+
+      <!-- AIRBNB SEARCH -->
+      <div class="airbnb-search-wrapper">
+
+        <form
+          action="/listings"
+          method="GET"
+          class="airbnb-search"
+        >
+
+          <!-- WHERE -->
+          <div class="search-item">
+            <label for="search-location">Where</label>
+
+            <input
+              id="search-location"
+              type="text"
+              name="location"
+              placeholder="Search destinations"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="search-divider"></div>
+
+          <!-- CHECK IN -->
+          <div class="search-item">
+            <label for="check-in">Check in</label>
+
+            <input
+              id="check-in"
+              type="date"
+              name="checkIn"
+            >
+          </div>
+
+          <div class="search-divider"></div>
+
+          <!-- CHECK OUT -->
+          <div class="search-item">
+            <label for="check-out">Check out</label>
+
+            <input
+              id="check-out"
+              type="date"
+              name="checkOut"
+            >
+          </div>
+
+          <div class="search-divider"></div>
+
+          <!-- GUESTS -->
+          <div class="search-item">
+            <label for="guests">Guests</label>
+
+            <input
+              id="guests"
+              type="number"
+              name="guests"
+              min="1"
+              placeholder="Add guests"
+            >
+          </div>
+
+          <!-- SEARCH BUTTON -->
+          <button
+            type="submit"
+            class="search-button"
+            aria-label="Search listings"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="navbar-nav ms-auto">
+
+        <% if (currentUser) { %>
+
+          <a
+            class="nav-link"
+            href="/listings/new"
+          >
+            Airbnb your home
+          </a>
+
+          <a
+            class="nav-link"
+            href="/users/logout"
+          >
+            <b>Logout</b>
+          </a>
+
+        <% } else { %>
+
+          <a
+            class="nav-link"
+            href="/users/login"
+          >
+            <b>Login</b>
+          </a>
+
+          <a
+            class="nav-link"
+            href="/users/signup"
+          >
+            <b>Sign Up</b>
+          </a>
+
+        <% } %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
